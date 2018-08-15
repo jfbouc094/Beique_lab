@@ -157,6 +157,6 @@ GPIO.cleanup()
 
 block_length = time.time()-block_start
 
-print('Trial length', (trial_start))
+print('Trial length', (np.around(np.array(trial_length),2)))
 print('Block length', (np.around(block_length,2)))
 
