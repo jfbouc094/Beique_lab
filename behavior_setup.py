@@ -38,15 +38,18 @@ class stim(object):
 #        p_reward        - Probability between 0 and 1 of getting reward
 #        delay           - Delay, in sec, before getting reward
 #        size            - Size of reward in sec
+        
         reward_status = []
+        
         delay_ = np.random.normal(loc = delay_mean, scale = delay_sd)
         time.sleep(delay_)
         
         if np.random.rand() < p_reward:
+            reward_status.append('ON')
             GPIO.output(self.pin, True)
             time.sleep(size)
             GPIO.output(self.pin, False)
-            reward_status.append('ON')
+            
             
         else:
             reward_status.append('OFF')
@@ -138,7 +141,7 @@ while trial < num_trial:
         #GPIO.output(12,True)
 
         pulse_time, ipi  =  LED.pulse()
-        print('pulse length', (np.around(np.array(pulse_time),2)))
+        print('pulse length', (np.around(np.array(pulse_time),4)))
         #GPIO.output(12,False)
 
 
