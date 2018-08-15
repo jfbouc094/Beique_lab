@@ -11,6 +11,7 @@ import RPi.GPIO as GPIO
 import numpy as np
 from pygame import mixer
 
+
 GPIO.setwarnings(False)
 
 mixer.init()
