@@ -33,12 +33,12 @@ class stim(object):
     def GPIOsetup (self):
         GPIO.setup(self.pin, self.io)
 
-    def reward(self, p_reward = 1, delay_mean = 5, delay_sd = 0, size = 5):
+    def reward(self, p_reward = .5, delay_mean = 10, delay_sd = 5, size = 5):
 
 #        p_reward        - Probability between 0 and 1 of getting reward
 #        delay           - Delay, in sec, before getting reward
 #        size            - Size of reward in sec
-
+        reward_status = []
         delay_ = np.random.normal(loc = delay_mean, scale = delay_sd)
         time.sleep(delay_)
         
@@ -46,9 +46,15 @@ class stim(object):
             GPIO.output(self.pin, True)
             time.sleep(size)
             GPIO.output(self.pin, False)
-
-
-    def pulse(self, duration = 0.01, rate = 20.0, train_length = 1):
+            reward_status.append('ON')
+            
+        else:
+            reward_status.append('OFF')
+            
+        
+        return reward_status
+    
+    def pulse(self, duration = 0.001, rate = 20.0, train_length = 1):
 
 #        inputs:
 #        --------------
@@ -97,10 +103,10 @@ water = stim("water",25,GPIO.OUT)
 opto = True # False = no_opto True = opto
 
 #Set you inter-trial intervals
-ITI = 10
+ITI = 5
 
 #Set your number of trials
-num_trial = 3
+num_trial = 5
 
 #Do not modify those settings
 trial = 0
@@ -122,7 +128,7 @@ while trial < num_trial:
 
         #GPIO.output(16,True)
 
-        water.reward()
+        reward_status = water.reward()
 
         #GPIO.output(16,False)
 
@@ -132,7 +138,7 @@ while trial < num_trial:
         #GPIO.output(12,True)
 
         pulse_time, ipi  =  LED.pulse()
-        print('pulse length', pulse_time)
+        print('pulse length', (np.around(np.array(pulse_time),2)))
         #GPIO.output(12,False)
 
 
@@ -140,7 +146,7 @@ while trial < num_trial:
 
         #GPIO.output(16,True)
 
-        water.reward()
+        reward_status = water.reward()
 
         #GPIO.output(16,False)
 
@@ -157,6 +163,7 @@ GPIO.cleanup()
 
 block_length = time.time()-block_start
 
+print('Reward Status', reward_status)
 print('Trial length', (np.around(np.array(trial_length),2)))
 print('Block length', (np.around(block_length,2)))
 
