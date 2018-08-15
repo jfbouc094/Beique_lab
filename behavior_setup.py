@@ -141,7 +141,7 @@ while trial < num_trial:
         #GPIO.output(12,True)
 
         pulse_time, ipi  =  LED.pulse()
-        print('pulse length', (np.around(np.array(pulse_time),4)))
+        print('pulse length', (np.around(np.array(pulse_time),5)))
         #GPIO.output(12,False)
 
 
@@ -150,6 +150,7 @@ while trial < num_trial:
         #GPIO.output(16,True)
 
         reward_status = water.reward()
+        print('Reward Status', reward_status)
 
         #GPIO.output(16,False)
 
@@ -166,7 +167,6 @@ GPIO.cleanup()
 
 block_length = time.time()-block_start
 
-print('Reward Status', reward_status)
 print('Trial length', (np.around(np.array(trial_length),2)))
 print('Block length', (np.around(block_length,2)))
 
