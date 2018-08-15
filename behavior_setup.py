@@ -9,7 +9,6 @@ Created on Wed Aug 15 10:55:22 2018
 import time
 import RPi.GPIO as GPIO
 import numpy as np
-import random
 from pygame import mixer
 
 GPIO.setwarnings(False)
@@ -28,12 +27,12 @@ class stim(object):
         self.GPIOsetup()
 
     def __str__(self):
-        return'The {} {} associated to pin {}'.format(self.io,self.name,self.pi$
+        return'The {} {} associated to pin {}'.format(self.io,self.name,self.pin)
 
     def GPIOsetup (self):
         GPIO.setup(self.pin, self.io)
 
-    def reward(self, p_reward = 1, delay_mean = 3, delay_sd = 1, size = 5):
+    def reward(self, p_reward = 1, delay_mean = 5, delay_sd = 0, size = 5):
 
 #        p_reward        - Probability between 0 and 1 of getting reward
 #        delay           - Delay, in sec, before getting reward
@@ -85,27 +84,36 @@ class stim(object):
 
         return pulse_time, ipi
 
-
+#Configurate the sound
 sound = mixer.Sound('beep-2.wav')
 
+#Configurate the GPIOs
 LED = stim("LED",23,GPIO.OUT)
 
 water = stim("water",25,GPIO.OUT)
 
+#Turn the opto On or Off
 opto = True # False = no_opto True = opto
 
+#Set you inter-trial intervals
 ITI = 10
 
+#Set your number of trials
+num_trial = 3
+
+#Do not modify those settings
 trial = 0
 
-num_trial = 1
+trial_length = []
+
+block_start = time.time()
 
 while trial < num_trial:
-    print(trial)
+    trial_start = time.time()
     #GPIO.output(24,True)
     sound.play()
     #GPIO.output(24,False)
-    time.sleep(3)
+    time.sleep(1)
 
     if opto is False :
 
@@ -136,11 +144,18 @@ while trial < num_trial:
         #GPIO.output(16,False)
 
     trial += 1
-
+    
+    trial_length = np.append(trial_length, (time.time() - trial_start))
+    
     if trial < num_trial:
         time.sleep(ITI)
 
 
+
 GPIO.cleanup()
 
+block_length = time.time()-block_start
+
+print('Trial length', round(trial_length,2))
+print('Block length', round(block_length,2))
 
