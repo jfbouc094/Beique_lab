@@ -33,7 +33,7 @@ class stim(object):
     def GPIOsetup (self):
         GPIO.setup(self.pin, self.io)
 
-    def reward(self, p_reward = 1, delay_mean = 5, delay_sd = 0, size = 5):
+    def reward(self, p_reward = 1, delay_mean = 10, delay_sd = 0, size = 5):
 
 #        p_reward        - Probability between 0 and 1 of getting reward
 #        delay           - Delay, in sec, before getting reward
@@ -129,7 +129,7 @@ while trial < num_trial:
     GPIO.output(18,True)
     sound.play()
     GPIO.output(18,False)
-    time.sleep(1)
+    time.sleep(3)
 
     if opto is False :
 
