@@ -33,7 +33,7 @@ class stim(object):
     def GPIOsetup (self):
         GPIO.setup(self.pin, self.io)
 
-    def reward(self, p_reward = 1, delay_mean = 2, delay_sd = 0, size = 5):
+    def reward(self, p_reward = 1, delay_mean = 5, delay_sd = 0, size = 5):
 
 #        p_reward        - Probability between 0 and 1 of getting reward
 #        delay           - Delay, in sec, before getting reward
@@ -97,8 +97,12 @@ class stim(object):
 #Configurate the sound
 sound = mixer.Sound('beep-2.wav')
 
+#Setup the output pin for the opto to the Intan board
+GPIO.setup(24,GPIO.OUT)
+
 #Configurate the GPIOs
 LED = stim("LED",23,GPIO.OUT)
+
 
 water = stim("water",25,GPIO.OUT)
 
