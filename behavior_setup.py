@@ -97,12 +97,14 @@ class stim(object):
 #Configurate the sound
 sound = mixer.Sound('beep-2.wav')
 
+#Setup the output pin for the sound to the Intan board
+GPIO.setup(18,GPIO.OUT)
+
 #Setup the output pin for the opto to the Intan board
 GPIO.setup(24,GPIO.OUT)
 
 #Configurate the GPIOs
 LED = stim("LED",23,GPIO.OUT)
-
 
 water = stim("water",25,GPIO.OUT)
 
@@ -124,9 +126,9 @@ block_start = time.time()
 
 while trial < num_trial:
     trial_start = time.time()
-    #GPIO.output(24,True)
+    GPIO.output(18,True)
     sound.play()
-    #GPIO.output(24,False)
+    GPIO.output(18,False)
     time.sleep(1)
 
     if opto is False :
