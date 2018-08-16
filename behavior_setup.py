@@ -33,7 +33,7 @@ class stim(object):
     def GPIOsetup (self):
         GPIO.setup(self.pin, self.io)
 
-    def reward(self, p_reward = .5, delay_mean = 10, delay_sd = 5, size = 5):
+    def reward(self, p_reward = 1, delay_mean = 2, delay_sd = 0, size = 5):
 
 #        p_reward        - Probability between 0 and 1 of getting reward
 #        delay           - Delay, in sec, before getting reward
@@ -57,7 +57,7 @@ class stim(object):
         
         return reward_status
     
-    def pulse(self, duration = 0.001, rate = 20.0, train_length = 1):
+    def pulse(self, duration = 0.01, rate = 20.0, train_length = 1):
 
 #        inputs:
 #        --------------
@@ -109,7 +109,7 @@ opto = True # False = no_opto True = opto
 ITI = 5
 
 #Set your number of trials
-num_trial = 5
+num_trial = 1
 
 #Do not modify those settings
 trial = 0
@@ -138,11 +138,12 @@ while trial < num_trial:
     else:
 
         #Do pulsetrain
-        #GPIO.output(12,True)
+        GPIO.output(24,True)
 
         pulse_time, ipi  =  LED.pulse()
         print('pulse length', (np.around(np.array(pulse_time),5)))
-        #GPIO.output(12,False)
+        
+        GPIO.output(24,False)
 
 
         #give the reward
