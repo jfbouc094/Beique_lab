@@ -128,6 +128,7 @@ while trial < num_trial:
     trial_start = time.time()
     GPIO.output(18,True)
     sound.play()
+    time.sleep(3)
     GPIO.output(18,False)
     time.sleep(3)
 
