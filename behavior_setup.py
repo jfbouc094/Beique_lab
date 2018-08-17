@@ -168,7 +168,7 @@ while trial < num_trial:
 
         #Give the reward
         reward_status, delay_ = water.reward()
-        print('Reward Status', reward_status, 'and Delay', delay_)
+        print('Reward Status', reward_status, 'and Delay', (np.around(delay_,2)))
 
 
     else:
@@ -180,7 +180,7 @@ while trial < num_trial:
 
         #give the reward
         reward_status, delay_ = water.reward()
-        print('Reward Status', reward_status, 'and Delay', delay_)
+        print('Reward Status', reward_status, 'and Delay', (np.around(delay_,2)))
 
     #Counting the number of trials
     trial += 1
