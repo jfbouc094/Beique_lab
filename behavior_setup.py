@@ -71,7 +71,7 @@ class stim(object):
             GPIO.output(self.pin, False)
             
             #Stop the output to Intan Board
-            GPIO.output(12,True)
+            GPIO.output(12,False)
             
         else:
             #Save the current reward status
