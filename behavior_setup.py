@@ -138,6 +138,7 @@ while trial < num_trial:
         #GPIO.output(16,True)
 
         reward_status = water.reward()
+        print('Reward Status', reward_status)
 
         #GPIO.output(16,False)
 
