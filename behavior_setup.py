@@ -57,7 +57,7 @@ class stim(object):
         
         return reward_status
     
-    def pulse(self, duration = 0.01, rate = 20.0, train_length = 1):
+    def pulse(self, duration = 0.001, rate = 20.0, train_length = 1):
 
 #        inputs:
 #        --------------
