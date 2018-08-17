@@ -37,7 +37,7 @@ class stim(object):
         #Set up the GPIO pins you will be using as inputs or outputs
         GPIO.setup(self.pin, self.io)
 
-    def reward(self, p_reward = 1, delay_mean = 10, delay_sd = 0, size = 5):
+    def reward(self, p_reward = .75, delay_mean = 5, delay_sd = 2, size = 5):
 
 #        p_reward        - Probability between 0 and 1 of getting reward
 #        delay           - Delay, in sec, before getting reward
@@ -137,13 +137,13 @@ LED = stim("LED",23,GPIO.OUT)
 water = stim("water",25,GPIO.OUT)
 
 #Turn the opto On or Off
-opto = False # False = no_opto True = opto
+opto = True # False = no_opto True = opto
 
 #Set you inter-trial intervals
 ITI = 5
 
 #Set your number of trials
-num_trial = 1
+num_trial = 4
 
 #Do not modify those settings
 trial = 0
