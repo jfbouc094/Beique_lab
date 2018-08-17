@@ -78,7 +78,7 @@ class stim(object):
             reward_status.append('OFF')
             
         
-        return reward_status
+        return reward_status, delay_
     
     def pulse(self, duration = 0.01, rate = 20.0, train_length = 1):
 
@@ -167,8 +167,8 @@ while trial < num_trial:
     if opto is False :
 
         #Give the reward
-        reward_status = water.reward()
-        print('Reward Status', reward_status)
+        reward_status, delay_ = water.reward()
+        print('Reward Status', reward_status, 'and Delay', delay_)
 
 
     else:
@@ -179,8 +179,8 @@ while trial < num_trial:
         
 
         #give the reward
-        reward_status = water.reward()
-        print('Reward Status', reward_status)
+        reward_status, delay_ = water.reward()
+        print('Reward Status', reward_status, 'and Delay', delay_)
 
     #Counting the number of trials
     trial += 1
