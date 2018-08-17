@@ -57,7 +57,7 @@ class stim(object):
         
         return reward_status
     
-    def pulse(self, duration = 0.01, rate = 20.0, train_length = 5):
+    def pulse(self, duration = 0.01, rate = 20.0, train_length = 1):
 
 #        inputs:
 #        --------------
@@ -109,7 +109,7 @@ LED = stim("LED",23,GPIO.OUT)
 water = stim("water",25,GPIO.OUT)
 
 #Turn the opto On or Off
-opto = False # False = no_opto True = opto
+opto = True # False = no_opto True = opto
 
 #Set you inter-trial intervals
 ITI = 5
