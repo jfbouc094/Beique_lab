@@ -14,8 +14,10 @@ from pygame import mixer
 
 GPIO.setwarnings(False)
 
+#Initiate the module controlling the conditioned stimuli
 mixer.init()
 
+#Set the mode of the pins (broadcom vs local) 
 GPIO.setmode(GPIO.BCM)
 
 class stim(object):
@@ -31,6 +33,8 @@ class stim(object):
         return'The {} {} associated to pin {}'.format(self.io,self.name,self.pin)
 
     def GPIOsetup (self):
+        
+        #Set up the GPIO pins you will be using as inputs or outputs
         GPIO.setup(self.pin, self.io)
 
     def reward(self, p_reward = 1, delay_mean = 10, delay_sd = 0, size = 5):
@@ -42,20 +46,35 @@ class stim(object):
         #Setup the output pin for the reward to the Intan board
         GPIO.setup(12,GPIO.OUT)
         
+        #Start an empty list for reward status (On = reward Off = no reward)
         reward_status = []
         
+        #Calculate the delay based on the given parameters
         delay_ = np.random.normal(loc = delay_mean, scale = delay_sd)
         time.sleep(delay_)
         
         if np.random.rand() < p_reward:
+            
+            #Append the current reward status
             reward_status.append('ON')
+            
+            #Trigers output to Intan Board
             GPIO.output(12,True)
+            
+            #Turn on the water dispenser
             GPIO.output(self.pin, True)
+            
+            #Control the size of the reward
             time.sleep(size)
+            
+            #Turn off the water dispenser
             GPIO.output(self.pin, False)
+            
+            #Stop the output to Intan Board
             GPIO.output(12,True)
             
         else:
+            #Append the current reward status
             reward_status.append('OFF')
             
         
@@ -101,7 +120,6 @@ class stim(object):
 #Configurate the sound
 sound = mixer.Sound('beep-2.wav')
 
-
 #Setup the output pin for the sound to the Intan board
 GPIO.setup(18,GPIO.OUT)
 
@@ -130,16 +148,20 @@ trial_length = []
 block_start = time.time()
 
 while trial < num_trial:
+    #Set the time for the beginning of the trial
     trial_start = time.time()
+    
+    #Play the conditioned stimuli 
     GPIO.output(18,True)
     sound.play()
     GPIO.output(18,False)
+    
+    #Pause before the reward or opto
     time.sleep(3)
 
     if opto is False :
 
-        #give the reward
-
+        #Give the reward
         reward_status = water.reward()
         print('Reward Status', reward_status)
 
@@ -156,24 +178,27 @@ while trial < num_trial:
 
 
         #give the reward
-
         reward_status = water.reward()
         print('Reward Status', reward_status)
 
-
+    #Counting the number of trials
     trial += 1
     
+    #Calculate the trial length and add it to the list 
     trial_length = np.append(trial_length, (time.time() - trial_start))
     
+    #Exit the loop if all trials have been completed
     if trial < num_trial:
         time.sleep(ITI)
 
 
-
+#Clean up the GPIOs
 GPIO.cleanup()
 
+#Calculate the length of the block of trials 
 block_length = time.time()-block_start
 
+#Return the length of the trial and the block
 print('Trial length', (np.around(np.array(trial_length),2)))
 print('Block length', (np.around(block_length,2)))
 
