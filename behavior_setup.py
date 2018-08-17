@@ -57,7 +57,7 @@ class stim(object):
         
         return reward_status
     
-    def pulse(self, duration = 0.01, rate = 20.0, train_length = 1):
+    def pulse(self, duration = 0.01, rate = 20.0, train_length = 5):
 
 #        inputs:
 #        --------------
@@ -128,7 +128,6 @@ while trial < num_trial:
     trial_start = time.time()
     GPIO.output(18,True)
     sound.play()
-    time.sleep(3)
     GPIO.output(18,False)
     time.sleep(3)
 
