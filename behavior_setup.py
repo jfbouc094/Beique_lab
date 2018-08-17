@@ -11,10 +11,10 @@ import RPi.GPIO as GPIO
 import numpy as np
 from pygame import mixer
 
-
+#Turn off the GPIO warnings
 GPIO.setwarnings(False)
 
-#Initiate the module controlling the conditioned stimuli
+#Initiate the module controlling the sound
 mixer.init()
 
 #Set the mode of the pins (broadcom vs local) 
@@ -55,7 +55,7 @@ class stim(object):
         
         if np.random.rand() < p_reward:
             
-            #Append the current reward status
+            #Save the current reward status
             reward_status.append('ON')
             
             #Trigers output to Intan Board
@@ -74,7 +74,7 @@ class stim(object):
             GPIO.output(12,True)
             
         else:
-            #Append the current reward status
+            #Save the current reward status
             reward_status.append('OFF')
             
         
@@ -88,19 +88,26 @@ class stim(object):
 #        rate           - Rate of pulses in 1/sec
 #        length         - Train length in sec
 
-
+        #Setup the output pin for the opto to the Intan board
+        GPIO.setup(24,GPIO.OUT)
+        
         start_time = time.time()
         train_length_curr = 0
         pulse_time = []
         ipi = []
 
         while train_length_curr < train_length:
-
+            #Trigers output to Intan Board
+            GPIO.output(24,True)
+            
             #Start and stop pulse for duration
             GPIO.output(self.pin, True)
             pulse_start = time.time()
             time.sleep(duration - (pulse_start - time.time()))
             GPIO.output(self.pin, False)
+
+            #Stop output to Intan Board
+            GPIO.output(24,False)
 
             #Calculate pulse time for this trial and save it
             pulse_time_rel_ =  time.time() - pulse_start
@@ -117,16 +124,14 @@ class stim(object):
 
         return pulse_time, ipi
 
-#Configurate the sound
+#Assign the sound command
 sound = mixer.Sound('beep-2.wav')
 
 #Setup the output pin for the sound to the Intan board
 GPIO.setup(18,GPIO.OUT)
 
-#Setup the output pin for the opto to the Intan board
-GPIO.setup(24,GPIO.OUT)
 
-#Configurate the GPIOs
+#Assign GPIOs
 LED = stim("LED",23,GPIO.OUT)
 
 water = stim("water",25,GPIO.OUT)
@@ -169,13 +174,9 @@ while trial < num_trial:
     else:
 
         #Do pulsetrain
-        GPIO.output(24,True)
-
         pulse_time, ipi  =  LED.pulse()
         print('pulse length', (np.around(np.array(pulse_time),5)))
         
-        GPIO.output(24,False)
-
 
         #give the reward
         reward_status = water.reward()
