@@ -112,7 +112,7 @@ LED = stim("LED",23,GPIO.OUT)
 water = stim("water",25,GPIO.OUT)
 
 #Turn the opto On or Off
-opto = True # False = no_opto True = opto
+opto = False # False = no_opto True = opto
 
 #Set you inter-trial intervals
 ITI = 5
