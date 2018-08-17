@@ -135,12 +135,12 @@ while trial < num_trial:
 
         #give the reward
 
-        #GPIO.output(16,True)
+        GPIO.output(12,True)
 
         reward_status = water.reward()
         print('Reward Status', reward_status)
 
-        #GPIO.output(16,False)
+        GPIO.output(12,False)
 
     else:
 
@@ -155,12 +155,12 @@ while trial < num_trial:
 
         #give the reward
 
-        #GPIO.output(16,True)
+        GPIO.output(12,True)
 
         reward_status = water.reward()
         print('Reward Status', reward_status)
 
-        #GPIO.output(16,False)
+        GPIO.output(12,False)
 
     trial += 1
     
