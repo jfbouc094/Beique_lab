@@ -38,6 +38,9 @@ class stim(object):
 #        p_reward        - Probability between 0 and 1 of getting reward
 #        delay           - Delay, in sec, before getting reward
 #        size            - Size of reward in sec
+  
+        #Setup the output pin for the reward to the Intan board
+        GPIO.setup(12,GPIO.OUT)
         
         reward_status = []
         
@@ -46,10 +49,11 @@ class stim(object):
         
         if np.random.rand() < p_reward:
             reward_status.append('ON')
+            GPIO.output(12,True)
             GPIO.output(self.pin, True)
             time.sleep(size)
             GPIO.output(self.pin, False)
-            
+            GPIO.output(12,True)
             
         else:
             reward_status.append('OFF')
@@ -97,8 +101,6 @@ class stim(object):
 #Configurate the sound
 sound = mixer.Sound('beep-2.wav')
 
-#Setup the output pin for the reward to the Intan board
-GPIO.setup(12,GPIO.OUT)
 
 #Setup the output pin for the sound to the Intan board
 GPIO.setup(18,GPIO.OUT)
@@ -138,12 +140,9 @@ while trial < num_trial:
 
         #give the reward
 
-        GPIO.output(12,True)
-
         reward_status = water.reward()
         print('Reward Status', reward_status)
 
-        GPIO.output(12,False)
 
     else:
 
@@ -158,12 +157,9 @@ while trial < num_trial:
 
         #give the reward
 
-        GPIO.output(12,True)
-
         reward_status = water.reward()
         print('Reward Status', reward_status)
 
-        GPIO.output(12,False)
 
     trial += 1
     
