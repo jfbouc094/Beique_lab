@@ -97,6 +97,9 @@ class stim(object):
 #Configurate the sound
 sound = mixer.Sound('beep-2.wav')
 
+#Setup the output pin for the reward to the Intan board
+GPIO.setup(12,GPIO.OUT)
+
 #Setup the output pin for the sound to the Intan board
 GPIO.setup(18,GPIO.OUT)
 
