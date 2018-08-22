@@ -147,7 +147,7 @@ opto = True # False = no_opto True = opto
 ITI = 5
 
 #Set your number of trials
-num_trial = 4
+num_trial = 1
 
 #Do not modify those settings
 trial = 0
@@ -172,19 +172,19 @@ while trial < num_trial:
 
         #Give the reward
         reward_status, delay_ = water.reward()
-        print('Reward Status', reward_status, 'and Delay', (np.around(delay_,2)))
+        print'Reward Status',reward_status,'and Delay',np.around(delay_,2)
 
 
     else:
 
         #Do pulsetrain
         pulse_time, ipi  =  LED.pulse()
-        print('pulse length', (np.around(np.array(pulse_time),5)))
+        print'pulse length',np.around(np.array(pulse_time),5)
         
 
         #give the reward
         reward_status, delay_ = water.reward()
-        print('Reward Status', reward_status, 'and Delay', (np.around(delay_,2)))
+        print'Reward Status',reward_status,'and Delay',np.around(delay_,2)
 
     #Counting the number of trials
     trial += 1
@@ -204,6 +204,6 @@ GPIO.cleanup()
 block_length = time.time()-block_start
 
 #Return the length of the trial and the block
-print('Trial length', (np.around(np.array(trial_length),2)))
-print('Block length', (np.around(block_length,2)))
+print'Trial length',np.around(np.array(trial_length),2)
+print'Block length',np.around(block_length,2)
 
