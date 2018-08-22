@@ -37,17 +37,21 @@ class stim(object):
         #Set up the GPIO pins you will be using as inputs or outputs
         GPIO.setup(self.pin, self.io)
 
-    def reward(self, p_reward = .75, delay_mean = 5, delay_sd = 2, size = 5):
+    def reward(self, p_reward = .75, delay_mean = 5, delay_sd = 2, size = 2, rate = 1 ):
 
 #        p_reward        - Probability between 0 and 1 of getting reward
 #        delay           - Delay, in sec, before getting reward
-#        size            - Size of reward in sec
+#        size            - Size of reward in ml
+#        rate            - Rate of flow 1/sec
   
         #Setup the output pin for the reward to the Intan board
         GPIO.setup(12,GPIO.OUT)
         
         #Start an empty list for reward status (On = reward Off = no reward)
         reward_status = []
+        
+        #Calculate the reward_delay based on the given parameters
+        reward_delay = 1/rate * size
         
         #Calculate the delay based on the given parameters
         delay_ = np.random.normal(loc = delay_mean, scale = delay_sd)
@@ -65,7 +69,7 @@ class stim(object):
             GPIO.output(self.pin, True)
             
             #Control the size of the reward
-            time.sleep(size)
+            time.sleep(reward_delay)
             
             #Turn off the water dispenser
             GPIO.output(self.pin, False)
