@@ -13,7 +13,7 @@ import RPi.GPIO as GPIO
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(25,GPIO.OUT)
+GPIO.setup(23,GPIO.OUT)
 
 start_time = time.time()
 
@@ -23,7 +23,7 @@ try:
         print('Start')
 except KeyboardInterrupt:
     print ("Done")
-    GPIO.output(25,False)
+    GPIO.output(23,False)
     GPIO.cleanup()             
     length = time.time()-start_time
     print('Length', (np.around(length,2)))
