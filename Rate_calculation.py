@@ -19,7 +19,7 @@ start_time = time.time()
 
 try:
     while True:
-        GPIO.output(25,True)     # Turn on water
+        GPIO.output(23,True)     # Turn on water
         print('Start')
 except KeyboardInterrupt:
     print ("Done")
