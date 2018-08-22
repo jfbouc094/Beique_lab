@@ -84,7 +84,7 @@ class stim(object):
         
         return reward_status, delay_
     
-    def pulse(self, duration = 0.01, rate = 20.0, train_length = 1):
+    def pulse(self, duration = 0.001, rate = 20.0, train_length = 1):
 
 #        inputs:
 #        --------------
@@ -179,7 +179,7 @@ while trial < num_trial:
 
         #Do pulsetrain
         pulse_time, ipi  =  LED.pulse()
-        print'pulse length',np.around(np.array(pulse_time),5)
+        #print'pulse length',np.around(np.array(pulse_time),5)
         
 
         #give the reward
