@@ -20,9 +20,7 @@ start_time = time.time()
 try:
     while True:
         GPIO.output(23,True)     # Turn on water
-        print('Start')
 except KeyboardInterrupt:
-    print ("Done")
     GPIO.output(23,False)
     GPIO.cleanup()             
     length = time.time()-start_time
