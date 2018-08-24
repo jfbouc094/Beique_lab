@@ -61,11 +61,14 @@ class stim(object):
         if np.random.rand() < p_reward:
             
             
-            #Trigers output to Intan Board
-            GPIO.output(12,True)
-            
             #Turn on the water dispenser
             GPIO.output(self.pin, True)
+            
+            #You'll have to account for the time it
+            #take for the water to get to the mouthpiece
+            
+            #Trigers output to Intan Board
+            GPIO.output(12,True)
             
             #Control the size of the reward
             time.sleep(reward_delay)
@@ -171,9 +174,10 @@ while trial_ < num_trial:
     #Set the time for the beginning of the trial
     trial_start = time.time()
     
-    #Play the conditioned stimuli 
-    GPIO.output(18,True)
+    #Play the conditioned stimuli
     sound.play()
+    GPIO.output(18,True)
+    #maybe put a sleep statement
     GPIO.output(18,False)
     
     #Pause before the reward or opto
