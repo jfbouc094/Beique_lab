@@ -1,1 +1,5 @@
 
+Block Test, probabilistic 75%, large reward had 1 trials, ITI set for 5 sec, and opto was True
+Reward Status ['ON'] and Delay 3.33
+Trial length in secs [9.35]
+Block length in secs 9.35
