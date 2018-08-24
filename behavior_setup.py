@@ -47,8 +47,9 @@ class stim(object):
         #Setup the output pin for the reward to the Intan board
         GPIO.setup(12,GPIO.OUT)
         
-        #Start an empty list for reward status (On = reward Off = no reward)
-        reward_status = []
+        #Create an attribute for reward status 
+        #so you can give it a value (On = reward Off = no reward)
+        reward_status = 0 
         
         #Calculate the reward_delay based on the given parameters
         reward_delay = 1/rate * size
@@ -59,8 +60,6 @@ class stim(object):
         
         if np.random.rand() < p_reward:
             
-            #Save the current reward status
-            reward_status.append('ON')
             
             #Trigers output to Intan Board
             GPIO.output(12,True)
@@ -77,9 +76,12 @@ class stim(object):
             #Stop the output to Intan Board
             GPIO.output(12,False)
             
+            #Assign the current reward status
+            reward_status ='ON'
+            
         else:
-            #Save the current reward status
-            reward_status.append('OFF')
+            #Assign the current reward status
+            reward_status ='OFF'
             
         
         return reward_status, delay_
@@ -140,7 +142,7 @@ LED = stim("LED",23,GPIO.OUT)
 
 water = stim("water",25,GPIO.OUT)
 
-#Set the name of the block of trials
+#Set the name of the block of trials 
 name = 'Test2, probabilistic 75%, large reward'
 
 #Turn the opto On or Off
@@ -154,17 +156,18 @@ num_trial = 10
 
 #Save your trial parameters
 with open('block_data.txt', 'a') as f:
-    print('{} had {} trials, ITI set for {} sec, and opto was {}'
-          .format(name,num_trial,ITI,opto), file=f)
+    print('\n''Block_name:',name,
+          '\n''Number of trials:',num_trial,
+          '\n''Inter-Trial Interval:',ITI,
+          '\n''Opto:',opto, file=f)
 
-#Do not modify those settings
-trial = 0
+#Assign a beginning value to trial_
+trial_ = 0
 
-trial_length = []
-
+#Set the time for the beginning of the block
 block_start = time.time()
 
-while trial < num_trial:
+while trial_ < num_trial:
     #Set the time for the beginning of the trial
     trial_start = time.time()
     
@@ -181,9 +184,8 @@ while trial < num_trial:
         #Give the reward
         reward_status, delay_ = water.reward()
         with open('block_data.txt', 'a') as f:
-            print('Reward Status {} and Delay {}'
-                  .format(reward_status,np.around(delay_,2)), file=f)
-
+            print('\n''Reward Status:',reward_status, 
+                  '\n''Delay:',np.around(delay_,2),file=f)
 
     else:
 
@@ -195,17 +197,22 @@ while trial < num_trial:
         #give the reward
         reward_status, delay_ = water.reward()
         with open('block_data.txt', 'a') as f:
-            print('Reward Status {} and Delay {}'
-                  .format(reward_status,np.around(delay_,2)), file=f)
+            print('\n''Reward Status:',reward_status, 
+                  '\n''Delay in sec:',np.around(delay_,2),file=f)
 
-    #Counting the number of trials
-    trial += 1
-    
     #Calculate the trial length and add it to the list 
-    trial_length = np.append(trial_length, (time.time() - trial_start))
+    trial_length = time.time() - trial_start
+
+    
+    #Return the length of the trial
+    with open('block_data.txt', 'a') as f:
+        print('Trial length in sec:',np.around(trial_length,2),file=f)
+        
+    #Count the number of trials
+    trial_ += 1
     
     #Exit the loop if all trials have been completed
-    if trial < num_trial:
+    if trial_ < num_trial:
         time.sleep(ITI)
 
 
@@ -217,6 +224,5 @@ block_length = time.time()-block_start
 
 #Return the length of the trial and the block
 with open('block_data.txt', 'a') as f:
-    print('Trial length in secs',np.around(np.array(trial_length),2),file=f)
-    print('Block length in secs',np.around(block_length,2),file=f)
+    print('\n''Block length in sec',np.around(block_length,2),file=f)
 
