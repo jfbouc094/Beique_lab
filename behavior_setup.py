@@ -140,6 +140,9 @@ LED = stim("LED",23,GPIO.OUT)
 
 water = stim("water",25,GPIO.OUT)
 
+#Set the name of the block of trials
+name = 'Test, probabilistic 75%, large reward'
+
 #Turn the opto On or Off
 opto = True # False = no_opto True = opto
 
@@ -148,6 +151,11 @@ ITI = 5
 
 #Set your number of trials
 num_trial = 1
+
+#Save your trial parameters
+with open('block_data.txt', 'a') as f:
+    print('Block {} had {} trials, ITI set for {} sec, and opto was {}'
+          .format(name,num_trial,ITI,opto), file=f)
 
 #Do not modify those settings
 trial = 0
@@ -172,7 +180,9 @@ while trial < num_trial:
 
         #Give the reward
         reward_status, delay_ = water.reward()
-        print'Reward Status',reward_status,'and Delay',np.around(delay_,2)
+        with open('block_data.txt', 'a') as f:
+            print('Reward Status {} and Delay {}'
+                  .format(reward_status,np.around(delay_,2)), file=f)
 
 
     else:
@@ -184,7 +194,9 @@ while trial < num_trial:
 
         #give the reward
         reward_status, delay_ = water.reward()
-        print'Reward Status',reward_status,'and Delay',np.around(delay_,2)
+        with open('block_data.txt', 'a') as f:
+            print('Reward Status {} and Delay {}'
+                  .format(reward_status,np.around(delay_,2)), file=f)
 
     #Counting the number of trials
     trial += 1
@@ -204,6 +216,7 @@ GPIO.cleanup()
 block_length = time.time()-block_start
 
 #Return the length of the trial and the block
-print'Trial length',np.around(np.array(trial_length),2)
-print'Block length',np.around(block_length,2)
+with open('block_data.txt', 'a') as f:
+    print('Trial length in secs',np.around(np.array(trial_length),2),file=f)
+    print('Block length in secs',np.around(block_length,2),file=f)
 
