@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 Block Test, probabilistic 75%, large reward had 1 trials, ITI set for 5 sec, and opto was True
 Reward Status ['ON'] and Delay 3.33
@@ -29,3 +30,5 @@ Reward Status ['ON'] and Delay 6.4
 Reward Status ['ON'] and Delay 5.54
 Trial length in secs [11.   11.47  7.53 13.26 13.86 10.13  7.92 12.7  12.42 11.56]
 Block length in secs 156.89
+=======
+>>>>>>> 1324bbb075122f283e5f62da6d835fd3c0d21c8c

@@ -25,5 +25,5 @@ except KeyboardInterrupt:
     GPIO.output(25,False)  #Turn off water
     GPIO.cleanup()             
     length = time.time()-start_time #Calculate the length
-    print'The flow rate for your pump is',np.around((1/length),2),'ml/sec'
+    print('The flow rate for your pump is',np.around((1/length),2),'ml/sec')
 
