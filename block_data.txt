@@ -5,33 +5,43 @@ Inter-Trial Interval: 5
 Opto: True
 
 Reward Status: OFF 
-Delay in sec: 4.98
-Trial length in sec: 8.99
+Delay in sec: 6.2
+Trial length in sec: 10.22
+
+Reward Status: ON 
+Delay in sec: 3.41
+Trial length in sec: 9.43
+
+Reward Status: ON 
+Delay in sec: 4.22
+Trial length in sec: 10.23
+
+Reward Status: ON 
+Delay in sec: 3.69
+Trial length in sec: 9.71
+
+Reward Status: ON 
+Delay in sec: 5.65
+Trial length in sec: 11.67
 
 Reward Status: OFF 
-Delay in sec: 7.14
-Trial length in sec: 11.16
+Delay in sec: 5.96
+Trial length in sec: 9.98
 
 Reward Status: ON 
-Delay in sec: 7.34
-Trial length in sec: 13.36
+Delay in sec: 5.52
+Trial length in sec: 11.53
 
 Reward Status: ON 
-Delay in sec: 3.78
-Trial length in sec: 9.79
+Delay in sec: 4.94
+Trial length in sec: 10.95
+
+Reward Status: ON 
+Delay in sec: 6.09
+Trial length in sec: 12.11
 
 Reward Status: OFF 
-Delay in sec: 5.2
-Trial length in sec: 9.21
+Delay in sec: 4.45
+Trial length in sec: 8.46
 
-Reward Status: ON 
-Delay in sec: 6.63
-Trial length in sec: 12.64
-
-Reward Status: ON 
-Delay in sec: 9.51
-Trial length in sec: 15.53
-
-Reward Status: ON 
-Delay in sec: 3.58
-Trial length in sec: 9.6
+Block length in sec 149.34
