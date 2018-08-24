@@ -3,3 +3,16 @@ Block Test, probabilistic 75%, large reward had 1 trials, ITI set for 5 sec, and
 Reward Status ['ON'] and Delay 3.33
 Trial length in secs [9.35]
 Block length in secs 9.35
+Test2, probabilistic 75%, large reward had 10 trials, ITI set for 5 sec, and opto was True
+Reward Status ['ON'] and Delay 2.92
+Reward Status ['ON'] and Delay 3.29
+Reward Status ['ON'] and Delay 2.54
+Reward Status ['ON'] and Delay 5.01
+Reward Status ['ON'] and Delay 3.73
+Reward Status ['ON'] and Delay 5.23
+Reward Status ['ON'] and Delay 9.19
+Reward Status ['ON'] and Delay 1.8
+Reward Status ['ON'] and Delay 6.54
+Reward Status ['ON'] and Delay 5.91
+Trial length in secs [ 8.93  9.3   8.56 11.03  9.74 11.25 15.21  7.81 12.56 11.92]
+Block length in secs 151.36
