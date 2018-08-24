@@ -155,7 +155,7 @@ ITI = 5
 num_trial = 10
 
 #Save your trial parameters
-with open('block_data.txt', 'a') as f:
+with open('block_data.txt', 'w') as f:
     print('\n''Block_name:',name,
           '\n''Number of trials:',num_trial,
           '\n''Inter-Trial Interval:',ITI,
