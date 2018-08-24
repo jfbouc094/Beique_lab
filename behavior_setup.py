@@ -141,7 +141,7 @@ LED = stim("LED",23,GPIO.OUT)
 water = stim("water",25,GPIO.OUT)
 
 #Set the name of the block of trials
-name = 'Test, probabilistic 75%, large reward'
+name = 'Test2, probabilistic 75%, large reward'
 
 #Turn the opto On or Off
 opto = True # False = no_opto True = opto
@@ -150,11 +150,11 @@ opto = True # False = no_opto True = opto
 ITI = 5
 
 #Set your number of trials
-num_trial = 1
+num_trial = 10
 
 #Save your trial parameters
 with open('block_data.txt', 'a') as f:
-    print('Block {} had {} trials, ITI set for {} sec, and opto was {}'
+    print('{} had {} trials, ITI set for {} sec, and opto was {}'
           .format(name,num_trial,ITI,opto), file=f)
 
 #Do not modify those settings
