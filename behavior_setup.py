@@ -37,7 +37,7 @@ class stim(object):
         #Set up the GPIO pins you will be using as inputs or outputs
         GPIO.setup(self.pin, self.io)
 
-    def reward(self, p_reward = .75, delay_mean = 5, delay_sd = 2, size = 2, rate = 1 ):
+    def reward(self, p_reward = .75, delay_mean = 5, delay_sd = 1, size = 2, rate = 1 ):
 
 #        p_reward        - Probability between 0 and 1 of getting reward
 #        delay           - Delay, in sec, before getting reward
