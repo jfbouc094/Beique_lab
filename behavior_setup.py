@@ -146,11 +146,11 @@ LED = stim("LED",23,GPIO.OUT)
 water = stim("water",25,GPIO.OUT)
 
 #Set the name of the block of trials 
-name = 'Test2'
+name = 'Test opto'
 
 
 #Set your number of trials
-num_trial = 10 
+num_trial = 2
 #params = ['num_trial', 'opto_prob']
 #params_defaults = [10, 0.5]
 #
