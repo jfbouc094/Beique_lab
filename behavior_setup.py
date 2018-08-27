@@ -37,7 +37,7 @@ class stim(object):
         #Set up the GPIO pins you will be using as inputs or outputs
         GPIO.setup(self.pin, self.io)
 
-    def reward(self, p_reward = .75, delay_mean = 5, delay_sd = 1, size = 2, rate = 1 ):
+    def reward(self, p_reward, size, delay_mean = 15, rate = 1 ):
 
 #        p_reward        - Probability between 0 and 1 of getting reward
 #        delay           - Delay, in sec, before getting reward
@@ -55,7 +55,7 @@ class stim(object):
         reward_delay = 1/rate * size
         
         #Calculate the delay based on the given parameters
-        delay_ = np.random.normal(loc = delay_mean, scale = delay_sd)
+        delay_ = np.random.exponential(delay_mean)
         time.sleep(delay_)
         
         if np.random.rand() < p_reward:
@@ -146,31 +146,59 @@ LED = stim("LED",23,GPIO.OUT)
 water = stim("water",25,GPIO.OUT)
 
 #Set the name of the block of trials 
-name = 'Test2, probabilistic 75%, large reward'
+name = 'Test2'
 
-#Turn the opto On or Off
-opto = True # False = no_opto True = opto
-
-#Set you inter-trial intervals
-ITI = 5
 
 #Set your number of trials
-num_trial = 10
+num_trial = 10 
+#params = ['num_trial', 'opto_prob']
+#params_defaults = [10, 0.5]
+#
+#for ind, param in enumerate(params):
+#    try:
+#        exec(param)
+#    except NameError:
+#        exec(param + ' = ' + str(params_default[ind]))
+        
+#Set probability for opto on
+opto_prob = 1
+
+#Set probability between 0 and 1 of getting reward
+p_reward = .75
+
+#Size of reward in ml
+size = 2
 
 #Save your trial parameters
 with open('block_data.txt', 'w') as f:
     print('\n''Block_name:',name,
           '\n''Number of trials:',num_trial,
-          '\n''Inter-Trial Interval:',ITI,
-          '\n''Opto:',opto, file=f)
+          '\n''The size of the reward in ml:',size,
+          '\n''Probability of reward:',p_reward*100,'%',
+          '\n''The opto probability:',opto_prob*100,'%', file=f)
 
 #Assign a beginning value to trial_
 trial_ = 0
+
+#Assign a beginning value to trial_
+ITI_ = 0 
+
+#Create a list of Opto conditions
+opto_cond = ['Opto_On','Opto_Off']
 
 #Set the time for the beginning of the block
 block_start = time.time()
 
 while trial_ < num_trial:
+    
+    #Choose a opto condition from opto_cond array p = probability 
+    #to get each entry in opto_cond
+    opto_status_ = np.random.choice(opto_cond, p = [opto_prob, 1 - opto_prob])
+    
+    #Save the opto status
+    with open('block_data.txt', 'a') as f:
+        print('\n''Opto status:',opto_status_, file=f)
+    
     #Set the time for the beginning of the trial
     trial_start = time.time()
     
@@ -183,12 +211,12 @@ while trial_ < num_trial:
     #Pause before the reward or opto
     time.sleep(3)
 
-    if opto is False :
+    if opto_status_ == 'Opto_Off' :
 
         #Give the reward
-        reward_status, delay_ = water.reward()
+        reward_status, delay_ = water.reward(p_reward,size)
         with open('block_data.txt', 'a') as f:
-            print('\n''Reward Status:',reward_status, 
+            print('Reward Status:',reward_status, 
                   '\n''Delay:',np.around(delay_,2),file=f)
 
     else:
@@ -199,9 +227,9 @@ while trial_ < num_trial:
         
 
         #give the reward
-        reward_status, delay_ = water.reward()
+        reward_status, delay_ = water.reward(p_reward,size)
         with open('block_data.txt', 'a') as f:
-            print('\n''Reward Status:',reward_status, 
+            print('Reward Status:',reward_status, 
                   '\n''Delay in sec:',np.around(delay_,2),file=f)
 
     #Calculate the trial length and add it to the list 
@@ -217,7 +245,16 @@ while trial_ < num_trial:
     
     #Exit the loop if all trials have been completed
     if trial_ < num_trial:
-        time.sleep(ITI)
+        
+        #Randomly give a ITI based on exp. distribution 
+        ITI_ = np.random.exponential(mean_ITI=30)
+        
+        #Save the ITI 
+        with open('block_data.txt', 'a') as f:
+            print('Inter-trial Interval in sec:',np.around(ITI_,2),file=f)
+        
+        #Pause for the ITI before next trial 
+        time.sleep(ITI_)
 
 
 #Clean up the GPIOs
@@ -229,4 +266,6 @@ block_length = time.time()-block_start
 #Return the length of the trial and the block
 with open('block_data.txt', 'a') as f:
     print('\n''Block length in sec',np.around(block_length,2),file=f)
+    
+
 
