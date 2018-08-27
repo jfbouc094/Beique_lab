@@ -1,67 +1,19 @@
 
-Block_name: Test2 
-Number of trials: 10 
+Block_name: Test opto 
+Number of trials: 2 
 The size of the reward in ml: 2 
 Probability of reward: 75.0 % 
 The opto probability: 100 %
 
 Opto status: Opto_On
 Reward Status: ON 
-Delay in sec: 2.4
-Trial length in sec: 8.42
-Inter-trial Interval in sec: 23.17
+Delay in sec: 2.34
+Trial length in sec: 8.36
+Inter-trial Interval in sec: 22.61
 
 Opto status: Opto_On
 Reward Status: ON 
-Delay in sec: 7.78
-Trial length in sec: 13.8
-Inter-trial Interval in sec: 12.69
+Delay in sec: 20.51
+Trial length in sec: 26.55
 
-Opto status: Opto_On
-Reward Status: ON 
-Delay in sec: 15.73
-Trial length in sec: 21.76
-Inter-trial Interval in sec: 40.04
-
-Opto status: Opto_On
-Reward Status: OFF 
-Delay in sec: 3.38
-Trial length in sec: 7.39
-Inter-trial Interval in sec: 31.97
-
-Opto status: Opto_On
-Reward Status: ON 
-Delay in sec: 11.13
-Trial length in sec: 17.16
-Inter-trial Interval in sec: 55.83
-
-Opto status: Opto_On
-Reward Status: ON 
-Delay in sec: 0.43
-Trial length in sec: 6.44
-Inter-trial Interval in sec: 64.24
-
-Opto status: Opto_On
-Reward Status: ON 
-Delay in sec: 2.27
-Trial length in sec: 8.29
-Inter-trial Interval in sec: 7.04
-
-Opto status: Opto_On
-Reward Status: ON 
-Delay in sec: 53.14
-Trial length in sec: 59.15
-Inter-trial Interval in sec: 36.11
-
-Opto status: Opto_On
-Reward Status: ON 
-Delay in sec: 2.38
-Trial length in sec: 8.39
-Inter-trial Interval in sec: 57.31
-
-Opto status: Opto_On
-Reward Status: ON 
-Delay in sec: 3.22
-Trial length in sec: 9.24
-
-Block length in sec 488.65
+Block length in sec 57.53
