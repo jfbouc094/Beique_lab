@@ -246,8 +246,8 @@ while trial_ < num_trial:
     #Exit the loop if all trials have been completed
     if trial_ < num_trial:
         
-        #Randomly give a ITI based on exp. distribution 
-        ITI_ = np.random.exponential(mean_ITI=30)
+        #Randomly give a ITI based on exp. distribution (mean_ITI)
+        ITI_ = np.random.exponential(30)
         
         #Save the ITI 
         with open('block_data.txt', 'a') as f:
