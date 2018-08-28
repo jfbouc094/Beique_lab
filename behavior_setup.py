@@ -309,5 +309,5 @@ if confirmation == 'y':
         print('\n''Block length',np.around(block_length,2),'sec',file=f)
     
 #Clean up the GPIOs
-GPIO.cleanup()
+#GPIO.cleanup()
 
