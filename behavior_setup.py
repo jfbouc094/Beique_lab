@@ -162,7 +162,7 @@ class stim(object):
                 name = arg
           
             elif opt in ("-t", "--ntrial"):
-                num_trial = float(arg)
+                num_trial = int(arg)
              
             elif opt in ("-o", "--oprob"):
                 opto_prob = float(arg)
@@ -201,22 +201,6 @@ if __name__ == "__main__":
        
     print('Probability of reward is',p_reward*100,'%')
 
-##Set the name of the block of trials 
-#name = 'Test'
-#
-#
-##Set your number of trials
-#num_trial = 2
-#
-#        
-##Set probability for opto on
-#opto_prob = 1
-#
-##Set probability between 0 and 1 of getting reward
-#p_reward = .75
-#
-##Size of reward in ml
-#size = 2
 
 #Ask for confirmation before beginning the block
 confirmation = input('\n''Please confirm that those are the right parameters (y/n):')
