@@ -1,19 +1,19 @@
 
-Block_name: Test2 
-Number of trials: 2.0 
+Block_name: Test5 
+Number of trials: 2 
 The size of the reward: 1.0 ml 
-Probability of reward: 50.0 % 
+Probability of reward: 100.0 % 
 Probability of Opto stimulation: 100.0 %
 
 Opto status: Opto_On
-Reward Status: OFF 
-Delay: 6.58 sec
-Trial length: 10.59 sec
-Inter-trial Interval: 40.05 sec
+Reward Status: ON 
+Delay: 1.45 sec
+Trial length: 6.46 sec
+Inter-trial Interval: 106.85 sec
 
 Opto status: Opto_On
 Reward Status: ON 
-Delay: 5.19 sec
-Trial length: 10.21 sec
+Delay: 6.76 sec
+Trial length: 11.78 sec
 
-Block length 60.89 sec
+Block length 125.2 sec
