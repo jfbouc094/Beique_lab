@@ -149,14 +149,14 @@ class stim(object):
             
         except getopt.GetoptError:
             print('\n''behavior_setup.py -n <name> -t <num_trial>',
-                  '-o <opto_prob> -s <size> -p <p_reward>''/n')
+                  '-o <opto_prob> -s <size> -p <p_reward>''\n')
             sys.exit(2)
        
     
         for opt, arg in opts:
             if opt == '-h':
                 print('\n''behavior_setup.py -n <name> -t <num_trial>', 
-                      '-o <opto_prob> -s <size> -p <p_reward>''/n')
+                      '-o <opto_prob> -s <size> -p <p_reward>''\n')
                 sys.exit()
             elif opt in ("-n", "--nam"):
                 name = arg
@@ -188,7 +188,6 @@ LED = stim("LED",23,GPIO.OUT)
 water = stim("water",25,GPIO.OUT)
 
 #Set block paramenters
-
 if __name__ == "__main__":
     name,num_trial,opto_prob,size,p_reward = stim.params(sys.argv[1:])
     
@@ -219,6 +218,9 @@ if __name__ == "__main__":
 ##Size of reward in ml
 #size = 2
 
+#Ask for confirmation before beginning the block
+confirmation = input('\n''Please confirm that those are the right parameters (y/n):')
+
 #Save your trial parameters
 with open('block_data.txt', 'w') as f:
     print('\n''Block_name:',name,
@@ -226,10 +228,8 @@ with open('block_data.txt', 'w') as f:
           '\n''The size of the reward:',size,'ml',
           '\n''Probability of reward:',p_reward*100,'%',
           '\n''Probability of Opto stimulation:',opto_prob*100,'%', file=f)
-
-confirmation = input('\n''Please confirm that those are the',
-                     'right parameters (y/n):')
-
+    
+    
 if confirmation == 'y':
 
     #Assign a beginning value to trial_
