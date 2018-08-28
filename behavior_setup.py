@@ -242,10 +242,13 @@ if confirmation == 'y':
         #Set the time for the beginning of the trial
         trial_start = time.time()
         
+        #TTl to intan board
+        GPIO.output(18,True)
+        
         #Play the conditioned stimuli
         sound.play()
-        GPIO.output(18,True)
-        #maybe put a sleep statement
+        
+        #TTL off 
         GPIO.output(18,False)
         
         #Pause before the reward or opto
@@ -297,8 +300,6 @@ if confirmation == 'y':
             time.sleep(ITI_)
     
     
-    #Clean up the GPIOs
-    #GPIO.cleanup()
     
     #Calculate the length of the block of trials 
     block_length = time.time()-block_start
@@ -307,5 +308,6 @@ if confirmation == 'y':
     with open('block_data.txt', 'a') as f:
         print('\n''Block length',np.around(block_length,2),'sec',file=f)
     
-
+#Clean up the GPIOs
+GPIO.cleanup()
 
