@@ -132,6 +132,8 @@ class stim(object):
             train_length_curr = time.time() - start_time
             ipi = np.append(ipi, time.time() - (pulse_time_abs_))
 
+        
+        
         return pulse_time, ipi
     
     def params(argv):
@@ -181,7 +183,6 @@ sound = mixer.Sound('beep-2.wav')
 #Setup the output pin for the sound to the Intan board
 GPIO.setup(18,GPIO.OUT)
 
-
 #Assign GPIOs
 LED = stim("LED",23,GPIO.OUT)
 
@@ -204,17 +205,17 @@ if __name__ == "__main__":
 
 #Ask for confirmation before beginning the block
 confirmation = input('\n''Please confirm that those are the right parameters (y/n):')
-
-#Save your trial parameters
-with open('block_data.txt', 'w') as f:
-    print('\n''Block_name:',name,
-          '\n''Number of trials:',num_trial,
-          '\n''The size of the reward:',size,'ml',
-          '\n''Probability of reward:',p_reward*100,'%',
-          '\n''Probability of Opto stimulation:',opto_prob*100,'%', file=f)
     
     
 if confirmation == 'y':
+    
+    #Save your trial parameters
+    with open('block_data.txt', 'w') as f:
+        print('\n''Block_name:',name,
+              '\n''Number of trials:',num_trial,
+              '\n''The size of the reward:',size,'ml',
+              '\n''Probability of reward:',p_reward*100,'%',
+              '\n''Probability of Opto stimulation:',opto_prob*100,'%', file=f)
 
     #Assign a beginning value to trial_
     trial_ = 0
@@ -297,7 +298,7 @@ if confirmation == 'y':
     
     
     #Clean up the GPIOs
-    GPIO.cleanup()
+    #GPIO.cleanup()
     
     #Calculate the length of the block of trials 
     block_length = time.time()-block_start
