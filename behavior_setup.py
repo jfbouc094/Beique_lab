@@ -5,12 +5,13 @@ Created on Wed Aug 15 10:55:22 2018
 
 @author: jean-francoisboucher
 """
-
+import datetime 
 import time
 import RPi.GPIO as GPIO
 import numpy as np
 from pygame import mixer
 import sys, getopt
+import pandas as pd
 
 #Turn off the GPIO warnings
 GPIO.setwarnings(False)
@@ -209,9 +210,13 @@ confirmation = input('\n''Please confirm that those are the right parameters (y/
     
 if confirmation == 'y':
     
+    #Get today's date 
+    now = datetime.datetime.now()
+    
     #Save your trial parameters
-    with open('block_data.txt', 'w') as f:
-        print('\n''Block_name:',name,
+    with open('block_data.txt', 'a') as f:
+        print('\n',now.strftime('%Y-%m-%d %H:%M'),
+              '\n''Block_name:',name,
               '\n''Number of trials:',num_trial,
               '\n''The size of the reward:',size,'ml',
               '\n''Probability of reward:',p_reward*100,'%',
@@ -224,20 +229,27 @@ if confirmation == 'y':
     ITI_ = 0 
     
     #Create a list of Opto conditions
-    opto_cond = ['Opto_On','Opto_Off']
+    opto_cond = ['ON','OFF']
+    
+    #Create two empty data frame
+    df1 = pd.DataFrame(index= None, columns =['Trial','ITI'])
+    
+   
+    df2 = pd.DataFrame(index = None, columns =['Opto status','Reward status',
+                                               'Delay','Trial length'])
     
     #Set the time for the beginning of the block
     block_start = time.time()
     
     while trial_ < num_trial:
         
+        #Append the current trial and ITI
+        df1 = df1.append ({'Trial':trial_,'ITI':ITI_},
+                          ignore_index=True)
+        
         #Choose a opto condition from opto_cond array p = probability 
         #to get each entry in opto_cond
         opto_status_ = np.random.choice(opto_cond, p = [opto_prob, 1 - opto_prob])
-        
-        #Save the opto status
-        with open('block_data.txt', 'a') as f:
-            print('\n''Opto status:',opto_status_, file=f)
         
         #Set the time for the beginning of the trial
         trial_start = time.time()
@@ -252,36 +264,26 @@ if confirmation == 'y':
         GPIO.output(18,False)
         
         #Pause before the reward or opto
-        time.sleep(3)
+        time.sleep(2)
     
-        if opto_status_ == 'Opto_Off' :
+        if opto_status_ is 'OFF' :
     
             #Give the reward
             reward_status, delay_ = water.reward(p_reward,size)
-            with open('block_data.txt', 'a') as f:
-                print('Reward Status:',reward_status, 
-                      '\n''Delay:',np.around(delay_,2),'sec',file=f)
     
         else:
     
             #Do pulsetrain
             pulse_time, ipi  =  LED.pulse()
-            #print'pulse length',np.around(np.array(pulse_time),5)
             
     
             #give the reward
             reward_status, delay_ = water.reward(p_reward,size)
-            with open('block_data.txt', 'a') as f:
-                print('Reward Status:',reward_status, 
-                      '\n''Delay:',np.around(delay_,2),'sec',file=f)
+
     
         #Calculate the trial length and add it to the list 
-        trial_length = time.time() - trial_start
+        trial_length = np.around(time.time() - trial_start,2)
     
-        
-        #Return the length of the trial
-        with open('block_data.txt', 'a') as f:
-            print('Trial length:',np.around(trial_length,2),'sec',file=f)
             
         #Count the number of trials
         trial_ += 1
@@ -290,23 +292,33 @@ if confirmation == 'y':
         if trial_ < num_trial:
             
             #Randomly give a ITI based on exp. distribution (mean_ITI)
-            ITI_ = np.random.exponential(30)
+            ITI_ = np.around(np.random.exponential(30),2)
             
-            #Save the ITI 
-            with open('block_data.txt', 'a') as f:
-                print('Inter-trial Interval:',np.around(ITI_,2),'sec',file=f)
-            
-            #Pause for the ITI before next trial 
-            time.sleep(ITI_)
+        else:
+            ITI_ = 0
+        
+        #Pause for the ITI before next trial 
+        time.sleep(ITI_)
     
-    
+        #Append all the current trial variables to the data frame
+        df2 = df2.append({'Opto status':opto_status_,
+                        'Reward status':reward_status,
+                        'Delay':delay_,
+                        'Trial length':trial_length,},ignore_index=True)
     
     #Calculate the length of the block of trials 
-    block_length = time.time()-block_start
+    block_length = np.around(time.time()-block_start,2)
+    
+    #Join the two dataframe together
+    df_final = pd.concat([df1, df2], axis=1)
+     
+    #Save to a csv file
+    df_final.to_csv('test.csv',index=False)
     
     #Return the length of the trial and the block
     with open('block_data.txt', 'a') as f:
-        print('\n''Block length',np.around(block_length,2),'sec',file=f)
+        print('\n''Block length',block_length,'sec',file=f)
+        
     
 #Clean up the GPIOs
 #GPIO.cleanup()
