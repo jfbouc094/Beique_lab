@@ -39,7 +39,7 @@ class stim(object):
         GPIO.setup(self.pin, self.io)
 
     def reward(self, p_reward, size, delay_mean = 3, mn = 0.5,
-               mx = 15, rate = 1 ):
+               mx = 7, rate = 1 ):
 
 #        p_reward        - Probability between 0 and 1 of getting reward
 #        delay           - Delay, in sec, before getting reward
@@ -235,7 +235,7 @@ if confirmation == 'y':
     
     #Assign a max and min for ITI
     mn = 3
-    mx = 20
+    mx = 25
     
     #Create a list of Opto conditions
     opto_cond = ['ON','OFF']
