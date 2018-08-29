@@ -38,11 +38,13 @@ class stim(object):
         #Set up the GPIO pins you will be using as inputs or outputs
         GPIO.setup(self.pin, self.io)
 
-    def reward(self, p_reward, size, delay_mean = 5, rate = 1 ):
+    def reward(self, p_reward, size, delay_mean = 3, mn = 0.5,
+               mx = 15, rate = 1 ):
 
 #        p_reward        - Probability between 0 and 1 of getting reward
 #        delay           - Delay, in sec, before getting reward
 #        size            - Size of reward in ml
+#        mn and mx       - Limits for the length of the delay
 #        rate            - Rate of flow 1/sec
   
         #Setup the output pin for the reward to the Intan board
@@ -57,6 +59,12 @@ class stim(object):
         
         #Calculate the delay based on the given parameters
         delay_ = np.around(np.random.exponential(delay_mean),2)
+        
+        #Make sure the delay is within the given min and max
+        while delay_ < mn or delay_ > mx:
+            delay_ = np.around(np.random.exponential(delay_mean),2)
+        
+        #Pause before giving the reward
         time.sleep(delay_)
         
         if np.random.rand() < p_reward:
@@ -225,6 +233,10 @@ if confirmation == 'y':
     #Assign a beginning value to trial_
     ITI_ = 0 
     
+    #Assign a max and min for ITI
+    mn = 3
+    mx = 20
+    
     #Create a list of Opto conditions
     opto_cond = ['ON','OFF']
     
@@ -255,7 +267,7 @@ if confirmation == 'y':
         GPIO.output(18,True)
         
         #Play the conditioned stimuli
-        sound.play()
+        sound.play() 
         
         #TTL off 
         GPIO.output(18,False)
@@ -291,6 +303,10 @@ if confirmation == 'y':
             #Randomly give a ITI based on exp. distribution (mean_ITI)
             ITI_ = np.around(np.random.exponential(7),2)
             
+            #Make sure the ITI is within the given min and max
+            while ITI_ < mn or ITI_ > mx:
+                ITI_ = np.around(np.random.exponential(7),2)
+                            
         else:
             ITI_ = 0
         
