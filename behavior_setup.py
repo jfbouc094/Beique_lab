@@ -251,6 +251,8 @@ if confirmation == 'y':
     block_start = time.time()
     
     while trial_ < num_trial:
+        #Set the time for the beginning of the trial
+        trial_start = time.time()
         
         #Append the current trial and ITI
         df1 = df1.append ({'Trial':trial_,'ITI':ITI_},
@@ -260,8 +262,6 @@ if confirmation == 'y':
         #to get each entry in opto_cond
         opto_status_ = np.random.choice(opto_cond, p = [opto_prob, 1 - opto_prob])
         
-        #Set the time for the beginning of the trial
-        trial_start = time.time()
         
         #TTl to intan board
         GPIO.output(18,True)
@@ -293,6 +293,11 @@ if confirmation == 'y':
         #Calculate the trial length and add it to the list 
         trial_length = np.around(time.time() - trial_start,2)
     
+        #Append all the current trial variables to the data frame
+        df2 = df2.append({'Opto status':opto_status_,
+                        'Reward status':reward_status,
+                        'Delay':delay_,
+                        'Trial length':trial_length,},ignore_index=True)
             
         #Count the number of trials
         trial_ += 1
@@ -313,11 +318,6 @@ if confirmation == 'y':
         #Pause for the ITI before next trial 
         time.sleep(ITI_)
     
-        #Append all the current trial variables to the data frame
-        df2 = df2.append({'Opto status':opto_status_,
-                        'Reward status':reward_status,
-                        'Delay':delay_,
-                        'Trial length':trial_length,},ignore_index=True)
     
     #Calculate the length of the block of trials 
     block_length = np.around(time.time()-block_start,2)
