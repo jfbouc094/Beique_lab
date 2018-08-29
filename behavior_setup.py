@@ -39,7 +39,7 @@ class stim(object):
         #Set up the GPIO pins you will be using as inputs or outputs
         GPIO.setup(self.pin, self.io)
 
-    def reward(self, p_reward, size, delay_mean = 15, rate = 1 ):
+    def reward(self, p_reward, size, delay_mean = 5, rate = 1 ):
 
 #        p_reward        - Probability between 0 and 1 of getting reward
 #        delay           - Delay, in sec, before getting reward
@@ -292,7 +292,7 @@ if confirmation == 'y':
         if trial_ < num_trial:
             
             #Randomly give a ITI based on exp. distribution (mean_ITI)
-            ITI_ = np.around(np.random.exponential(30),2)
+            ITI_ = np.around(np.random.exponential(7),2)
             
         else:
             ITI_ = 0
