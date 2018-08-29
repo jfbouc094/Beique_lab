@@ -28,7 +28,6 @@ class stim(object):
         self.name = name
         self.pin = pin
         self.io = io
-        self.verbose = False
         self.GPIOsetup()
 
     def __str__(self):
@@ -57,7 +56,7 @@ class stim(object):
         reward_delay = 1/rate * size
         
         #Calculate the delay based on the given parameters
-        delay_ = np.random.exponential(delay_mean)
+        delay_ = np.around(np.random.exponential(delay_mean),2)
         time.sleep(delay_)
         
         if np.random.rand() < p_reward:
@@ -149,13 +148,11 @@ class stim(object):
                                                         "oprob=","siz=",
                                                         "prew="])
     
-            
         except getopt.GetoptError:
             print('\n''behavior_setup.py -n <name> -t <num_trial>',
                   '-o <opto_prob> -s <size> -p <p_reward>''\n')
             sys.exit(2)
        
-    
         for opt, arg in opts:
             if opt == '-h':
                 print('\n''behavior_setup.py -n <name> -t <num_trial>', 
@@ -313,11 +310,11 @@ if confirmation == 'y':
     df_final = pd.concat([df1, df2], axis=1)
      
     #Save to a csv file
-    df_final.to_csv('test.csv',index=False)
+    df_final.to_csv('Trial_data.csv',index=False)
     
     #Return the length of the trial and the block
     with open('block_data.txt', 'a') as f:
-        print('\n''Block length',block_length,'sec',file=f)
+        print('Block length',block_length,'sec',file=f)
         
     
 #Clean up the GPIOs
