@@ -150,7 +150,7 @@ class stim(object):
         
         return pulse_time, ipi
     
-    def sound(self,size):
+    def sound(size):
         
         #Assign the sound command associated to large and small reward
         large = mixer.Sound('beep-3.wav')
