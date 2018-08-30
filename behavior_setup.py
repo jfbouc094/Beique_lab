@@ -150,7 +150,7 @@ class stim(object):
         
         return pulse_time, ipi
     
-    def sound(self,s):
+    def sound(self,size):
         
         #Assign the sound command associated to large and small reward
         large = mixer.Sound('beep-3.wav')
@@ -159,7 +159,7 @@ class stim(object):
         #Setup the output pin for the sound to the Intan board
         GPIO.setup(18,GPIO.OUT)
         
-        if s >= 5:
+        if size >= 5:
             #TTl to intan board
             GPIO.output(18,True)
             
@@ -218,7 +218,7 @@ class stim(object):
                 opto_prob = float(arg)
              
             elif opt in ("-s", "--siz"):
-                size = int(arg)
+                size = float(arg)
              
             elif opt in ("-p", "--prew"):
                 p_reward = float(arg)
