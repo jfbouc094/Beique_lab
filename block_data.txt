@@ -49,3 +49,88 @@ The size of the reward: 1.0 ml
 Probability of reward: 75.0 % 
 Probability of Opto stimulation: 30.0 %
 Block length 475.41 sec
+
+ 2018-08-30 15:30 
+Block_name: Test 
+Number of trials: 2 
+The size of the reward: 6 ml 
+Probability of reward: 100.0 % 
+Probability of Opto stimulation: 100.0 %
+
+ 2018-08-30 15:33 
+Block_name: Test 
+Number of trials: 2 
+The size of the reward: 6 ml 
+Probability of reward: 100.0 % 
+Probability of Opto stimulation: 100.0 %
+
+ 2018-08-30 15:43 
+Block_name: Test 
+Number of trials: 2 
+The size of the reward: 6.0 ml 
+Probability of reward: 100.0 % 
+Probability of Opto stimulation: 100.0 %
+
+ 2018-08-30 15:49 
+Block_name: Test 
+Number of trials: 2 
+The size of the reward: 6.0 ml 
+Probability of reward: 100.0 % 
+Probability of Opto stimulation: 100.0 %
+Block length 27.11 sec
+
+ 2018-08-30 15:56 
+Block_name: Test 
+Number of trials: 2 
+The size of the reward: 6.0 ml 
+Probability of reward: 100.0 % 
+Probability of Opto stimulation: 100.0 %
+Block length 28.39 sec
+
+ 2018-08-30 15:58 
+Block_name: Test 
+Number of trials: 2 
+The size of the reward: 6.0 ml 
+Probability of reward: 100.0 % 
+Probability of Opto stimulation: 100.0 %
+Block length 38.7 sec
+
+ 2018-08-30 16:05 
+Block_name: Test 
+Number of trials: 2 
+The size of the reward: 6.0 ml 
+Probability of reward: 100.0 % 
+Probability of Opto stimulation: 100.0 %
+Block length 35.69 sec
+
+ 2018-08-30 16:08 
+Block_name: Test 
+Number of trials: 2 
+The size of the reward: 6.0 ml 
+Probability of reward: 100.0 % 
+Probability of Opto stimulation: 100.0 %
+Block length 34.89 sec
+
+ 2018-08-30 16:38 
+Block_name: Test 
+Number of trials: 2 
+The size of the reward: 6.0 ml 
+Probability of reward: 100.0 % 
+Probability of Opto stimulation: 100.0 %
+Block length 28.36 sec
+
+ 2018-08-30 16:40 
+Block_name: Test 
+Number of trials: 2 
+The size of the reward: 6.0 ml 
+Probability of reward: 100.0 % 
+Probability of Opto stimulation: 100.0 %
+Block length 26.94 sec
+
+ 2018-08-30 16:43 
+Block_name: Test 
+Number of trials: 2 
+The size of the reward: 6.0 ml 
+Probability of reward: 100.0 % 
+Probability of Opto stimulation: 100.0 %
+Block length 48.15 sec
