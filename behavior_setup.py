@@ -34,9 +34,15 @@ class stim(object):
         return'The {} {} associated to pin {}'.format(self.io,self.name,self.pin)
 
     def GPIOsetup (self):
-        
         #Set up the GPIO pins you will be using as inputs or outputs
         GPIO.setup(self.pin, self.io)
+        
+    def start_finish(self):
+        #Set up a TTl pulse to trigger the start and finish of recording period
+        GPIO.output(self.pin,True)
+        GPIO.output(self.pin,False)
+        
+        
 
     def reward(self, p_reward, size, delay_mean = 3, mn = 0.5,
                mx = 7, rate = 1 ):
@@ -144,6 +150,42 @@ class stim(object):
         
         return pulse_time, ipi
     
+    def sound(self,size):
+        
+        #Assign the sound command associated to large and small reward
+        large = mixer.Sound('beep-3.wav')
+        small = mixer.Sound('beep-2.wav')
+        
+        #Setup the output pin for the sound to the Intan board
+        GPIO.setup(18,GPIO.OUT)
+        
+        if size >= 5:
+            #TTl to intan board
+            GPIO.output(18,True)
+            
+            #Play the conditioned stimuli
+            large.play() 
+            
+            #TTL off 
+            GPIO.output(18,False)
+            
+            #Pause before the reward or opto
+            time.sleep(2)
+            
+        else:
+            #TTl to intan board
+            GPIO.output(18,True)
+            
+            #Play the conditioned stimuli
+            small.play() 
+            
+            #TTL off 
+            GPIO.output(18,False)
+            
+            #Pause before the reward or opto
+            time.sleep(2)
+        
+    
     def params(argv):
         name = ''
         num_trial = ''
@@ -176,25 +218,22 @@ class stim(object):
                 opto_prob = float(arg)
              
             elif opt in ("-s", "--siz"):
-                size = float(arg)
+                size = int(arg)
              
             elif opt in ("-p", "--prew"):
                 p_reward = float(arg)
                 
         return name,num_trial,opto_prob,size,p_reward
 
-#Assign the sound command
-sound = mixer.Sound('beep-2.wav')
 
-#Setup the output pin for the sound to the Intan board
-GPIO.setup(18,GPIO.OUT)
+#Assign GPIOs 
+TTL = stim("TTL",16,GPIO.OUT)        
 
-#Assign GPIOs
 LED = stim("LED",23,GPIO.OUT)
 
 water = stim("water",25,GPIO.OUT)
 
-#Set block paramenters
+#Choose block paramenters
 if __name__ == "__main__":
     name,num_trial,opto_prob,size,p_reward = stim.params(sys.argv[1:])
     
@@ -210,7 +249,7 @@ if __name__ == "__main__":
 
 
 #Ask for confirmation before beginning the block
-confirmation = input('\n''Please confirm that those are the right parameters (y/n):')
+confirmation = input('\n''Please confirm the chosen parameters (y/n):')
     
     
 if confirmation == 'y':
@@ -250,6 +289,9 @@ if confirmation == 'y':
     #Set the time for the beginning of the block
     block_start = time.time()
     
+    #TTL to trigger the start of recording
+    TTL.start_finish()
+    
     while trial_ < num_trial:
         #Set the time for the beginning of the trial
         trial_start = time.time()
@@ -262,19 +304,10 @@ if confirmation == 'y':
         #to get each entry in opto_cond
         opto_status_ = np.random.choice(opto_cond, p = [opto_prob, 1 - opto_prob])
         
-        
-        #TTl to intan board
-        GPIO.output(18,True)
-        
-        #Play the conditioned stimuli
-        sound.play() 
-        
-        #TTL off 
-        GPIO.output(18,False)
-        
-        #Pause before the reward or opto
-        time.sleep(2)
-    
+        #Play the sound associated to the reward size
+        stim.sound(size)
+ 
+
         if opto_status_ is 'OFF' :
     
             #Give the reward
@@ -290,19 +323,19 @@ if confirmation == 'y':
             reward_status, delay_ = water.reward(p_reward,size)
 
     
-        #Calculate the trial length and add it to the list 
+        #Calculate the trial length 
         trial_length = np.around(time.time() - trial_start,2)
     
-        #Append all the current trial variables to the data frame
+        #Append all the current trial conditions to the data frame
         df2 = df2.append({'Opto status':opto_status_,
                         'Reward status':reward_status,
                         'Delay':delay_,
                         'Trial length':trial_length,},ignore_index=True)
             
-        #Count the number of trials
+        #Add to the trial counter
         trial_ += 1
         
-        #Exit the loop if all trials have been completed
+        #Set if all trials have been completed before producing a new ITI
         if trial_ < num_trial:
             
             #Randomly give a ITI based on exp. distribution (mean_ITI)
@@ -321,6 +354,9 @@ if confirmation == 'y':
     
     #Calculate the length of the block of trials 
     block_length = np.around(time.time()-block_start,2)
+    
+    #TTL to trigger the end of recording
+    TTL.start_finish()
     
     #Join the two dataframe together
     df_final = pd.concat([df1, df2], axis=1)
