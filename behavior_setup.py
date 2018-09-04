@@ -40,7 +40,7 @@ class stim(object):
     def trigger(self):
         #Set up a TTl pulse to trigger the start and finish of recording period
         GPIO.output(self.pin,True)
-        time.sleep(2)
+        time.sleep(0.5)
         GPIO.output(self.pin,False)
         
 
