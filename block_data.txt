@@ -134,3 +134,11 @@ The size of the reward: 6.0 ml
 Probability of reward: 100.0 % 
 Probability of Opto stimulation: 100.0 %
 Block length 48.15 sec
+
+ 2018-09-04 14:25 
+Block_name: TTL test 
+Number of trials: 2 
+The size of the reward: 1.0 ml 
+Probability of reward: 100.0 % 
+Probability of Opto stimulation: 100.0 %
+Block length 20.42 sec
