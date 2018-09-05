@@ -37,10 +37,12 @@ class stim(object):
         #Set up the GPIO pins you will be using as inputs or outputs
         GPIO.setup(self.pin, self.io)
         
-    def trigger(self):
-        #Set up a TTl pulse to trigger the start and finish of recording period
+    def triggerOn(self):
+        #Trigger the TTL to start recording
         GPIO.output(self.pin,True)
-        time.sleep(0.5)
+    
+    def triggerOff(self):
+        #Stop the TTL to stop recording
         GPIO.output(self.pin,False)
         
     def reward(self, p_reward, size, delay_mean = 3, mn = 0.5,
@@ -288,11 +290,12 @@ if confirmation == 'y':
     #Set the time for the beginning of the block
     block_start = time.time()
     
+    #Start data recording on acq software
+    TTL.triggerOn()
+    
     while trial_ < num_trial:
         #Set the time for the beginning of the trial
         trial_start = time.time()
-        
-        TTL.trigger()
         
         #Append the current trial and ITI
         df1 = df1.append ({'Trial':trial_,'ITI':ITI_},
@@ -353,6 +356,8 @@ if confirmation == 'y':
     #Calculate the length of the block of trials 
     block_length = np.around(time.time()-block_start,2)
     
+    #Stop data recording on acq software
+    TTL.triggerOff()
     
     #Join the two dataframe together
     df_final = pd.concat([df1, df2], axis=1)
