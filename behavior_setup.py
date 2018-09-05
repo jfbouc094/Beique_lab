@@ -43,7 +43,6 @@ class stim(object):
         time.sleep(0.5)
         GPIO.output(self.pin,False)
         
-
     def reward(self, p_reward, size, delay_mean = 3, mn = 0.5,
                mx = 7, rate = 1 ):
 
