@@ -192,3 +192,19 @@ The size of the reward: 1.0 ml
 Probability of reward: 100.0 % 
 Probability of Opto stimulation: 100.0 %
 Block length 22.17 sec
+
+ 2018-09-05 11:50 
+Block_name: Test 
+Number of trials: 2 
+The size of the reward: 1.0 ml 
+Probability of reward: 100.0 % 
+Probability of Opto stimulation: 100.0 %
+Block length 22.21 sec
+
+ 2018-09-05 11:52 
+Block_name: Test 
+Number of trials: 5 
+The size of the reward: 1.0 ml 
+Probability of reward: 100.0 % 
+Probability of Opto stimulation: 100.0 %
+Block length 71.89 sec

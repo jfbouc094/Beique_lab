@@ -1,3 +1,6 @@
 Trial,ITI,Opto status,Reward status,Delay,Trial length
-0.0,0.0,ON,ON,2.59,7.13
-1.0,3.86,ON,ON,6.58,11.12
+0.0,0.0,ON,ON,0.87,4.9
+1.0,4.42,ON,ON,1.65,5.68
+2.0,3.19,ON,ON,2.89,6.92
+3.0,14.3,ON,ON,3.53,7.56
+4.0,19.05,ON,ON,1.64,5.67
