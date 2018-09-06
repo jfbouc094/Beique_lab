@@ -195,9 +195,7 @@ class stim(object):
         p_reward = ''
        
         try:
-            opts, args = getopt.getopt(argv,"hn:t:o:s:p:",["nam=","ntrial=",
-                                                        "oprob=","siz=",
-                                                        "prew="])
+            opts, args = getopt.getopt(argv,"hn:t:o:s:p:")
     
         except getopt.GetoptError:
             print('\n''behavior_setup.py -n <name> -t <num_trial>',
@@ -209,19 +207,19 @@ class stim(object):
                 print('\n''behavior_setup.py -n <name> -t <num_trial>', 
                       '-o <opto_prob> -s <size> -p <p_reward>''\n')
                 sys.exit()
-            elif opt in ("-n", "--nam"):
+            elif opt in ("-n"):
                 name = arg
           
-            elif opt in ("-t", "--ntrial"):
+            elif opt in ("-t"):
                 num_trial = int(arg)
              
-            elif opt in ("-o", "--oprob"):
+            elif opt in ("-o"):
                 opto_prob = float(arg)
              
-            elif opt in ("-s", "--siz"):
+            elif opt in ("-s"):
                 size = float(arg)
              
-            elif opt in ("-p", "--prew"):
+            elif opt in ("-p"):
                 p_reward = float(arg)
                 
         return name,num_trial,opto_prob,size,p_reward
