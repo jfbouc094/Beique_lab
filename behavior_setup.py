@@ -45,7 +45,7 @@ class stim(object):
         #Stop the TTL to stop recording
         GPIO.output(self.pin,False)
         
-    def reward(self, p_reward, size, delay_mean = 3, mn = 0.5,
+    def reward(self, p_reward, size, delay_mean = 3, mn = 1,
                mx = 7, rate = 1 ):
 
 #        p_reward        - Probability between 0 and 1 of getting reward
@@ -151,7 +151,7 @@ class stim(object):
         
         return pulse_time, ipi
     
-    def sound(size):
+    def sound(s):
         
         #Assign the sound command associated to large and small reward
         large = mixer.Sound('beep-3.wav')
@@ -160,7 +160,7 @@ class stim(object):
         #Setup the output pin for the sound to the Intan board
         GPIO.setup(18,GPIO.OUT)
         
-        if size >= 5:
+        if s >= 5:
             #TTl to intan board
             GPIO.output(18,True)
             
@@ -188,24 +188,25 @@ class stim(object):
         
     
     def params(argv):
+        #Create a list of parameters you want to set before the block 
         name = ''
         num_trial = ''
         opto_prob = ''
-        size = ''
+        reward_size = ''
         p_reward = ''
        
         try:
-            opts, args = getopt.getopt(argv,"hn:t:o:s:p:")
+            opts, args = getopt.getopt(argv,"hn::t:o:r:p:")
     
         except getopt.GetoptError:
             print('\n''behavior_setup.py -n <name> -t <num_trial>',
-                  '-o <opto_prob> -s <size> -p <p_reward>''\n')
+                  '-o <opto_prob> -r <reward_size> -p <p_reward>''\n')
             sys.exit(2)
        
         for opt, arg in opts:
             if opt == '-h':
-                print('\n''behavior_setup.py -n <name> -t <num_trial>', 
-                      '-o <opto_prob> -s <size> -p <p_reward>''\n')
+                print('\n''behavior_setup.py -n <name> -t <num_trial>',
+                      '-o <opto_prob> -r <reward_size> -p <p_reward>''\n')
                 sys.exit()
             elif opt in ("-n"):
                 name = arg
@@ -216,25 +217,25 @@ class stim(object):
             elif opt in ("-o"):
                 opto_prob = float(arg)
              
-            elif opt in ("-s"):
-                size = float(arg)
+            elif opt in ("-r"):
+                reward_size = float(arg)
              
             elif opt in ("-p"):
                 p_reward = float(arg)
                 
-        return name,num_trial,opto_prob,size,p_reward
+        return name,num_trial,opto_prob,reward_size,p_reward
 
 
 #Assign GPIOs 
 TTL = stim("TTL",16,GPIO.OUT)        
 
-LED = stim("LED",23,GPIO.OUT)
+opto = stim("Opto",23,GPIO.OUT)
 
 water = stim("water",25,GPIO.OUT)
 
 #Choose block paramenters
 if __name__ == "__main__":
-    name,num_trial,opto_prob,size,p_reward = stim.params(sys.argv[1:])
+    name,num_trial,opto_prob,reward_size,p_reward = stim.params(sys.argv[1:])
     
     print('\n''Name:', name)
        
@@ -242,13 +243,16 @@ if __name__ == "__main__":
        
     print('Probability of Opto is :',opto_prob*100,'%')
       
-    print('The reward is',size,'ml')
+    print('The reward is',reward_size,'ml')
        
     print('Probability of reward is',p_reward*100,'%')
 
 
 #Ask for confirmation before beginning the block
 confirmation = input('\n''Please confirm the chosen parameters (y/n):')
+
+#Ask if this block is a stochastic training block
+sto_training = input('\n''Is this a stochastic training block (y/n):''\n')
     
     
 if confirmation == 'y':
@@ -261,7 +265,7 @@ if confirmation == 'y':
         print('\n',now.strftime('%Y-%m-%d %H:%M'),
               '\n''Block_name:',name,
               '\n''Number of trials:',num_trial,
-              '\n''The size of the reward:',size,'ml',
+              '\n''The size of the reward:',reward_size,'ml',
               '\n''Probability of reward:',p_reward*100,'%',
               '\n''Probability of Opto stimulation:',opto_prob*100,'%', file=f)
 
@@ -271,7 +275,8 @@ if confirmation == 'y':
     #Assign a beginning value to trial_
     ITI_ = 0 
     
-    #Assign a max and min for ITI
+    #Assign a mean, max and min for ITI
+    mean_ITI = 7
     mn = 3
     mx = 25
     
@@ -300,26 +305,28 @@ if confirmation == 'y':
                           ignore_index=True)
         
         #Choose a opto condition from opto_cond array p = probability 
-        #to get each entry in opto_cond
+        #to get each entry in opto_cond respectively
         opto_status_ = np.random.choice(opto_cond, p = [opto_prob, 1 - opto_prob])
         
-        #Play the sound associated to the reward size
-        stim.sound(size)
+        #Play the conditioned stimulus (sound) if it's not a stochastic block
+        if sto_training == 'n':
+            #Play the sound associated to the reward size
+            stim.sound(reward_size)
  
 
         if opto_status_ is 'OFF' :
     
             #Give the reward
-            reward_status, delay_ = water.reward(p_reward,size)
+            reward_status, delay_ = water.reward(p_reward,reward_size)
     
         else:
     
             #Do pulsetrain
-            pulse_time, ipi  =  LED.pulse()
+            pulse_time, ipi  =  opto.pulse()
             
     
             #give the reward
-            reward_status, delay_ = water.reward(p_reward,size)
+            reward_status, delay_ = water.reward(p_reward,reward_size)
 
     
         #Calculate the trial length 
@@ -334,15 +341,15 @@ if confirmation == 'y':
         #Add to the trial counter
         trial_ += 1
         
-        #Set if all trials have been completed before producing a new ITI
+        #Check if all trials have been completed before producing a new ITI
         if trial_ < num_trial:
             
-            #Randomly give a ITI based on exp. distribution (mean_ITI)
-            ITI_ = np.around(np.random.exponential(7),2)
+            #Randomly give a ITI based on exp. distribution
+            ITI_ = np.around(np.random.exponential(mean_ITI),2)
             
             #Make sure the ITI is within the given min and max
             while ITI_ < mn or ITI_ > mx:
-                ITI_ = np.around(np.random.exponential(7),2)
+                ITI_ = np.around(np.random.exponential(mean_ITI),2)
                             
         else:
             ITI_ = 0
