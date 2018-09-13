@@ -252,7 +252,7 @@ if __name__ == "__main__":
 confirmation = input('\n''Please confirm the chosen parameters (y/n):')
 
 #Ask if this block is a stochastic training block
-sto_training = input('\n''Is this a stochastic training block (y/n):''\n')
+sto_training = input('\n''Is this a stochastic training block (y/n):')
     
     
 if confirmation == 'y':
